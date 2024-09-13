@@ -31,7 +31,7 @@ for col in range(4, sheet.max_column + 1):
             dic.update({"wheelbase": cell_value})
     if dic:
         # 轿车：0 、SUV：1
-        dic.update(({"category": 1}))
+        dic.update(({"car_type_id": 2}))
         data.append(dic)
     dic = {}
 
