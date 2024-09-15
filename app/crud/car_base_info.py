@@ -16,7 +16,8 @@ def create_init_data_car(db: Session, item: schemas.CarBaseInfoListInitData):
     carinitdata_list = item.carinitdata
     rowdata = {}
     for car_data_dic in carinitdata_list:
-        res: models.CarBaseInfo = db.query(models.CarBaseInfo).filter(models.CarBaseInfo.name == car_data_dic.name).first()
+        res: models.CarBaseInfo = db.query(models.CarBaseInfo).filter(
+            models.CarBaseInfo.name == car_data_dic.name).first()
         if res:
             print(car_data_dic.name + "-车型已存在，无法插入该条数据")
             continue
@@ -42,7 +43,8 @@ def create_init_data_suv(db: Session, item: schemas.CarBaseInfoListInitDataSUV):
     carinitdata_list = item.carinitdata
     rowdata = {}
     for car_data_dic in carinitdata_list:
-        res: models.CarBaseInfo = db.query(models.CarBaseInfo).filter(models.CarBaseInfo.name == car_data_dic.name).first()
+        res: models.CarBaseInfo = db.query(models.CarBaseInfo).filter(
+            models.CarBaseInfo.name == car_data_dic.name).first()
         if res:
             print(car_data_dic.name + "-车型已存在，无法插入该条数据")
             continue
@@ -71,55 +73,70 @@ def get_all_car_base_info(db: Session):
 
 def get_car_or_suv(item: schemas.CarBaseInfoOnce, db: Session):
     result: [models.CarBaseInfo] = db.query(models.CarBaseInfo).filter(models.CarBaseInfo.car_type_id == item.id).all()
-    # print(result)
     return result
 
 
 def search_car_by_name(item: schemas.CarBaseInfoSearchName, db: Session):
-    result: [models.CarBaseInfo] = db.query(models.CarBaseInfo).filter(models.CarBaseInfo.name.ilike(f"%{item.name}%")).all()
-    # print(result)
+    # 构建查询条件列表
+    filters = []
+    # 车型类型筛选
+    if item.car_type_id:
+        filters.append(models.CarBaseInfo.car_type_id == item.car_type_id)
+    # 名称模糊搜索
+    if item.name:
+        filters.append(models.CarBaseInfo.name.ilike(f"%{item.name}%"))
+    # 执行查询，如果没有任何条件则返回空列表
+    if filters:
+        result: [models.CarBaseInfo] = db.query(models.CarBaseInfo).filter(*filters).all()
+    else:
+        result = []
     return result
 
 
 def search_car_by_wheelbase(item: schemas.CarBaseInfoSearchWheelBase, db: Session):
     # 拆分 wheelbase，确保有有效的左值和右值
     wheelbase = item.wheelbase.split("-")
-    # 初始化左值和右值为 None
+    # 初始化左值和右值，确保转换为数值类型
     left = wheelbase[0] if len(wheelbase) > 0 and wheelbase[0] else None
     right = wheelbase[1] if len(wheelbase) > 1 and wheelbase[1] else None
+    # 构建查询条件列表
+    filters = []
+    # 车型类型筛选
+    if item.car_type_id:
+        filters.append(models.CarBaseInfo.car_type_id == item.car_type_id)
+    # 轴距范围筛选
     if left and right:
-        result = db.query(models.CarBaseInfo).filter(
-            models.CarBaseInfo.wheelbase.between(left, right)
-        ).all()
+        filters.append(models.CarBaseInfo.wheelbase.between(left, right))
     elif left:
-        result = db.query(models.CarBaseInfo).filter(
-            models.CarBaseInfo.wheelbase == left
-        ).all()
+        filters.append(models.CarBaseInfo.wheelbase == left)
     elif right:
-        result = db.query(models.CarBaseInfo).filter(
-            models.CarBaseInfo.wheelbase == right
-        ).all()
+        filters.append(models.CarBaseInfo.wheelbase == right)
+    # 执行查询，如果没有任何条件则返回空列表
+    if filters:
+        result = db.query(models.CarBaseInfo).filter(*filters).all()
     else:
-        result = []  # 如果没有输入任何有效的数值，则返回空列表
+        result = []
     return result
 
 
 def search_car_by_name_and_wheelbase(item: schemas.CarBaseInfoSearchNameAndWheelBase, db: Session):
-    # 首先根据 name 进行模糊查询
-    query = db.query(models.CarBaseInfo).filter(models.CarBaseInfo.name.ilike(f"%{item.name}%"))
+    # 初始化查询条件列表
+    filters = [models.CarBaseInfo.name.ilike(f"%{item.name}%")]
+    # 如果存在 car_type_id，则添加过滤条件
+    if item.car_type_id:
+        filters.append(models.CarBaseInfo.car_type_id == item.car_type_id)
     # 拆分 wheelbase，确保有有效的左值和右值
     wheelbase = item.wheelbase.split("-")
-    # 初始化左值和右值为 None
+    # 初始化左值和右值
     left = wheelbase[0] if len(wheelbase) > 0 and wheelbase[0] else None
     right = wheelbase[1] if len(wheelbase) > 1 and wheelbase[1] else None
-    # 根据轴距范围进行进一步过滤
+    # 根据轴距范围添加过滤条件
     if left and right:
-        query = query.filter(models.CarBaseInfo.wheelbase.between(left, right))
+        filters.append(models.CarBaseInfo.wheelbase.between(left, right))
     elif left:
-        query = query.filter(models.CarBaseInfo.wheelbase == left)
+        filters.append(models.CarBaseInfo.wheelbase == left)
     elif right:
-        query = query.filter(models.CarBaseInfo.wheelbase == right)
-    # 执行查询并获取结果
-    result = query.all()
+        filters.append(models.CarBaseInfo.wheelbase == right)
+    # 执行查询并返回结果
+    result = db.query(models.CarBaseInfo).filter(*filters).all()
     return result
-

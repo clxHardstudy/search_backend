@@ -476,34 +476,40 @@ class CarBaseInfoOnce(BaseModel):
 
 
 class CarBaseInfoSearchName(BaseModel):
+    car_type_id: int
     name: str
 
     class Config:
         schema_extra = {
             "example": {
+                "car_type_id": 1,
                 "name": '奔驰'  # 使用字符串 "id" 作为键
             }
         }
 
 
 class CarBaseInfoSearchWheelBase(BaseModel):
+    car_type_id: int
     wheelbase: str
 
     class Config:
         schema_extra = {
             "example": {
+                "car_type_id": 1,
                 "wheelbase": "2800",  # 使用字符串 "id" 作为键
             }
         }
 
 
 class CarBaseInfoSearchNameAndWheelBase(BaseModel):
+    car_type_id: int
     name: str
     wheelbase: str
 
     class Config:
         schema_extra = {
             "example": {
+                "car_type_id": 1,
                 "name": "T1",
                 "wheelbase": "2800",  # 使用字符串 "id" 作为键
             }
