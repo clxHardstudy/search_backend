@@ -29,7 +29,7 @@ def get_all_car_base_info(db: Session = Depends(get_db)):
     return crud.get_all_car_base_info(db=db)
 
 
-@router_car_base_info.post("/car_or_suv", summary="获取车型数据")
+@router_car_base_info.post("/car_or_suv", summary="获取不同车型数据")
 def get_car_or_suv(item: schemas.CarBaseInfoOnce, db: Session = Depends(get_db)):
     return crud.get_car_or_suv(item=item, db=db)
 
