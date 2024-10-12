@@ -10,7 +10,7 @@ from configs.setting import config
 
 router_car_base_info = APIRouter(
     prefix="/car_base_info",
-    tags=["car_base_info-车基本信息"],
+    tags=["car_base_info-汽车基本信息"],
 )
 
 
@@ -34,6 +34,11 @@ def get_car_or_suv(item: schemas.CarBaseInfoOnce, db: Session = Depends(get_db))
     return crud.get_car_or_suv(item=item, db=db)
 
 
+@router_car_base_info.post("/car_type_and_platform", summary="获取不同平台的车型数据")
+def get_car_or_suv(item: schemas.CarBaseInfoCarTypeAndPlatform, db: Session = Depends(get_db)):
+    return crud.get_car_by_car_type_and_platform(item=item, db=db)
+
+
 @router_car_base_info.post("/name", summary="按照name进行模糊搜索")
 def search_car_by_name(item: schemas.CarBaseInfoSearchName, db: Session = Depends(get_db)):
     return crud.search_car_by_name(item=item, db=db)
@@ -44,6 +49,11 @@ def search_car_by_wheelbase(item: schemas.CarBaseInfoSearchWheelBase, db: Sessio
     return crud.search_car_by_wheelbase(item=item, db=db)
 
 
-@router_car_base_info.post("/name_and_wheelbase", summary="按照轴距进行范围搜索")
-def search_car_by_wheelbase(item: schemas.CarBaseInfoSearchNameAndWheelBase, db: Session = Depends(get_db)):
+@router_car_base_info.post("/name_and_wheelbase", summary="按照名称和轴距进行范围搜索")
+def search_car_by_name_wheelbase(item: schemas.CarBaseInfoSearchNameAndWheelBase, db: Session = Depends(get_db)):
     return crud.search_car_by_name_and_wheelbase(item=item, db=db)
+
+
+@router_car_base_info.post("/multiple_condition_query", summary="多条件查询")
+def search_car_by_multiple_condition_query(item: schemas.CarBaseInfoMultipleConditionQuery, db: Session = Depends(get_db)):
+    return crud.search_car_by_multiple_condition_query(item=item, db=db)

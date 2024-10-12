@@ -1,5 +1,4 @@
-from typing import Union, Optional, List
-
+from typing import Optional, List
 from pydantic import BaseModel
 from faker import Faker
 
@@ -17,7 +16,7 @@ class CarTypeInitData(BaseModel):
 
     class Config:
         schema_extra = {
-            "example":{"carinitdata":
+            "example": {"carinitdata":
                 [
                     {
                         "name": "T15 CVT ",

@@ -7,6 +7,7 @@ from app.routers.car_base_info import router_car_base_info
 from app.routers.car_type import router_car_type
 from app.routers.vertical_parallel_arb_connected import router_vertical_parallel_arb_connected
 from app.routers.working_conditions import router_working_conditions
+from app.routers.platform import router_platform
 from configs.setting import config
 
 Base.metadata.create_all(bind=engine)
@@ -31,6 +32,7 @@ def get_home():
 app.include_router(router_user)
 app.include_router(router_car_base_info)
 app.include_router(router_car_type)
+app.include_router(router_platform)
 app.include_router(router_vertical_parallel_arb_connected)
 app.include_router(router_working_conditions)
 

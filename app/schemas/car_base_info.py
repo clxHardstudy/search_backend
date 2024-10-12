@@ -1,5 +1,4 @@
-from typing import Union, Optional, List
-
+from typing import Optional, List
 from pydantic import BaseModel
 from faker import Faker
 
@@ -475,14 +474,29 @@ class CarBaseInfoOnce(BaseModel):
         }
 
 
+class CarBaseInfoCarTypeAndPlatform(BaseModel):
+    car_type_id: int
+    platform_id_list: List[int]
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "car_type_id": 1,
+                "platform_id_list": [1, 2]  # 使用字符串 "id" 作为键
+            }
+        }
+
+
 class CarBaseInfoSearchName(BaseModel):
     car_type_id: int
+    platform_id_list: List[int]
     name: str
 
     class Config:
         schema_extra = {
             "example": {
                 "car_type_id": 1,
+                "platform_id_list": [1, 2],
                 "name": '奔驰'  # 使用字符串 "id" 作为键
             }
         }
@@ -490,12 +504,14 @@ class CarBaseInfoSearchName(BaseModel):
 
 class CarBaseInfoSearchWheelBase(BaseModel):
     car_type_id: int
+    platform_id_list: List[int]
     wheelbase: str
 
     class Config:
         schema_extra = {
             "example": {
                 "car_type_id": 1,
+                "platform_id_list": [1, 2],
                 "wheelbase": "2800",  # 使用字符串 "id" 作为键
             }
         }
@@ -503,6 +519,7 @@ class CarBaseInfoSearchWheelBase(BaseModel):
 
 class CarBaseInfoSearchNameAndWheelBase(BaseModel):
     car_type_id: int
+    platform_id_list: List[int]
     name: str
     wheelbase: str
 
@@ -510,7 +527,29 @@ class CarBaseInfoSearchNameAndWheelBase(BaseModel):
         schema_extra = {
             "example": {
                 "car_type_id": 1,
+                "platform_id_list": [1, 2],
                 "name": "T1",
                 "wheelbase": "2800",  # 使用字符串 "id" 作为键
+            }
+        }
+
+
+class CarBaseInfoMultipleConditionQuery(BaseModel):
+    car_type_id: int
+    platform_id_list: List[int]
+    name: str
+    wheelbase: str
+    front_track: str
+    rear_track: str
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "car_type_id": 1,
+                "platform_id_list": [1, 2],
+                "name": "T1",
+                "wheelbase": "2800",
+                "front_track": "2800",
+                "rear_track": "2800",
             }
         }

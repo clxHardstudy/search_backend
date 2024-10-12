@@ -1,5 +1,4 @@
-from typing import Union, Optional
-from typing import Union, Optional, List
+from typing import Optional, List
 from pydantic import BaseModel
 from faker import Faker
 

@@ -1,5 +1,4 @@
-from typing import Union, Optional
-from typing import Union, Optional, List
+from typing import Optional, List
 from pydantic import BaseModel
 from faker import Faker
 
@@ -18,6 +17,17 @@ class WorkingConditions(BaseModel):
                 "coordinate_system": "0",
                 "working_conditions_list": [1, 2, 3],  # 修改此字段名为 working_conditions_list
                 "car_id_list": [1, 2, 3]
+            }
+        }
+
+
+class WorkingConditionsDetailOnce(BaseModel):
+    car_base_info_id: int
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "car_base_info_id": 1,
             }
         }
 

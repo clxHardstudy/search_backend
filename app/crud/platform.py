@@ -11,6 +11,6 @@ from app.common.validation import get_password_hash, create_access_token, verify
     check_access_token, check_user
 
 
-def get_car_type(db: Session):
-    result: [models.CarType] = db.query(models.CarType).all()
+def get_platform(db: Session):
+    result: [models.Platform] = db.query(models.Platform).all()
     return result
