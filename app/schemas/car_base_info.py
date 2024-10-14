@@ -474,6 +474,17 @@ class CarBaseInfoOnce(BaseModel):
         }
 
 
+class CarBaseInfoList(BaseModel):
+    car_base_info_id_list: Optional[List[int]] = None  # 默认为 None 表示允许为空
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "car_base_info_id_list": [1, 2, 3, 4, 5]  # 使用字符串 "id" 作为键
+            }
+        }
+
+
 class CarBaseInfoCarTypeAndPlatform(BaseModel):
     car_type_id: int
     platform_id_list: List[int]
@@ -551,5 +562,28 @@ class CarBaseInfoMultipleConditionQuery(BaseModel):
                 "wheelbase": "2800",
                 "front_track": "2800",
                 "rear_track": "2800",
+            }
+        }
+
+
+class CarBaseInfoNewMultipleConditionQuery(BaseModel):
+    car_type_id: int
+    platform_id_list: List[int]
+    name: str
+    wheelbase: str
+    front_track: str
+    rear_track: str
+    car_base_info_id_list: Optional[List[int]] = None  # 默认为 None 表示允许为空
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "car_type_id": 1,
+                "platform_id_list": [1, 2],
+                "name": "T1",
+                "wheelbase": "2800",
+                "front_track": "2800",
+                "rear_track": "2800",
+                "car_base_info_id_list": [1, 2]
             }
         }

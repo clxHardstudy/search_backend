@@ -117,6 +117,69 @@ def get_working_conditions_detail_once(item: schemas.WorkingConditionsDetailOnce
     return table_obj_date_dic
 
 
+def update_working_conditions_detail_once(item: schemas.WorkingConditionsDetailAll, db: Session):
+    """
+    修改某一个汽车工况的所有信息
+    :param item: 传入的WorkingConditionsDetailAll对象
+    :param db: 数据库会话
+    :return: None
+    """
+    car_base_info_res = db.query(models.CarBaseInfo).filter(models.CarBaseInfo.id == item.car_base_info_id).first()
+    working_conditions_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    working_conditions_table_obj_dic = {
+        "1": models.VerticalParallelARBConnected,
+        "2": models.VerticalParallelARBDisconnected,
+        "3": models.VerticalRollARBConnected,
+        "4": models.VerticalRollARBDisconnected,
+        "5": models.SteeringKinematicsPASOn,
+        "6": models.LateralParallelInPhase,
+        "7": models.LateralParallelOutOfPhase,
+        "8": models.LateralParallelThirtyMillMetersTrail,
+        "9": models.AligningTorqueParallel,
+        "10": models.AligningTorqueOpposite,
+        "11": models.LongitudinalAcceleration,
+        "12": models.LongitudinalBraking,
+    }
+    # 批量查询条件工况对象
+    working_conditions = db.query(models.WorkingConditions).filter(
+        models.WorkingConditions.id.in_(working_conditions_list)
+    ).all()
+    # 准备表对象字典
+    table_obj_dic = {
+        res.name_en: working_conditions_table_obj_dic[str(res.id)]
+        for res in working_conditions
+    }
+    # 遍历传入的 data 字典
+    for table_name, table_items in item.data.items():
+        # 根据 table_name 在表对象字典中找到对应的表模型
+        table_model = table_obj_dic.get(table_name)
+        if not table_model:
+            # 如果没找到对应的表，继续下一个
+            continue
+        # 查询对应的记录（根据 car_base_info_id 和 coordinate_system）
+        record = db.query(table_model).filter(
+            table_model.car_base_info_id == item.car_base_info_id,
+            table_model.coordinate_system == item.coordinate_system
+        ).first()
+        if record:
+            # 找到记录，更新每个字段
+            for field, value in table_items.items():
+                if hasattr(record, field):
+                    setattr(record, field, value)  # 动态更新字段
+        else:
+            # 如果没有找到记录，可以选择创建新的记录（如果这是你想要的行为）
+            new_record = table_model(
+                car_base_info_id=item.car_base_info_id,
+                coordinate_system=item.coordinate_system,
+                car_type_id=car_base_info_res.car_type_id,
+                **table_items
+            )
+            db.add(new_record)
+    # 提交所有修改
+    db.commit()
+    db.flush()
+
+
 def get_working_conditions_detail_title(item: schemas.WorkingConditionsDetailTitle, db: Session):
     """
     获取工况对应的KC参数

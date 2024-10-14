@@ -29,6 +29,11 @@ def get_all_car_base_info(db: Session = Depends(get_db)):
     return crud.get_all_car_base_info(db=db)
 
 
+@router_car_base_info.post("/car_list", summary="获取列表中的这些汽车")
+def get_car_base_info_list(item: schemas.CarBaseInfoList, db: Session = Depends(get_db)):
+    return crud.get_car_base_info_list(item=item, db=db)
+
+
 @router_car_base_info.post("/car_or_suv", summary="获取不同车型数据")
 def get_car_or_suv(item: schemas.CarBaseInfoOnce, db: Session = Depends(get_db)):
     return crud.get_car_or_suv(item=item, db=db)
@@ -55,5 +60,12 @@ def search_car_by_name_wheelbase(item: schemas.CarBaseInfoSearchNameAndWheelBase
 
 
 @router_car_base_info.post("/multiple_condition_query", summary="多条件查询")
-def search_car_by_multiple_condition_query(item: schemas.CarBaseInfoMultipleConditionQuery, db: Session = Depends(get_db)):
+def search_car_by_multiple_condition_query(item: schemas.CarBaseInfoMultipleConditionQuery,
+                                           db: Session = Depends(get_db)):
     return crud.search_car_by_multiple_condition_query(item=item, db=db)
+
+
+@router_car_base_info.post("/new_multiple_condition_query", summary="多条件查询")
+def search_car_by_new_multiple_condition_query(item: schemas.CarBaseInfoNewMultipleConditionQuery,
+                                           db: Session = Depends(get_db)):
+    return crud.search_car_by_new_multiple_condition_query(item=item, db=db)
