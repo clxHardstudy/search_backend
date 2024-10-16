@@ -113,7 +113,7 @@ def get_working_conditions_detail_once(item: schemas.WorkingConditionsDetailOnce
             res = db.query(table_obj).filter(table_obj.car_base_info_id == item.car_base_info_id).filter(
                 table_obj.coordinate_system == coordinate_system_value).all()
             table_obj_date_dic[coordinate_system_key].update({table_name: res})
-    print(table_obj_date_dic)
+    # print(table_obj_date_dic)
     return table_obj_date_dic
 
 

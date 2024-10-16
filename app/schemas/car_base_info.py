@@ -569,7 +569,7 @@ class CarBaseInfoMultipleConditionQuery(BaseModel):
 class CarBaseInfoNewMultipleConditionQuery(BaseModel):
     car_type_id: int
     platform_id_list: List[int]
-    name: str
+    # name: str
     wheelbase: str
     front_track: str
     rear_track: str
@@ -580,7 +580,7 @@ class CarBaseInfoNewMultipleConditionQuery(BaseModel):
             "example": {
                 "car_type_id": 1,
                 "platform_id_list": [1, 2],
-                "name": "T1",
+                # "name": "T1",
                 "wheelbase": "2800",
                 "front_track": "2800",
                 "rear_track": "2800",

@@ -67,5 +67,5 @@ def search_car_by_multiple_condition_query(item: schemas.CarBaseInfoMultipleCond
 
 @router_car_base_info.post("/new_multiple_condition_query", summary="多条件查询")
 def search_car_by_new_multiple_condition_query(item: schemas.CarBaseInfoNewMultipleConditionQuery,
-                                           db: Session = Depends(get_db)):
+                                               db: Session = Depends(get_db)):
     return crud.search_car_by_new_multiple_condition_query(item=item, db=db)
