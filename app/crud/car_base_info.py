@@ -215,7 +215,7 @@ def search_car_by_multiple_condition_query(item: schemas.CarBaseInfoMultipleCond
 
 def search_car_by_new_multiple_condition_query(item: schemas.CarBaseInfoNewMultipleConditionQuery, db: Session):
     filters = []
-    print("item.car_type_id: ", item.car_type_id)
+    # print("item.car_type_id: ", item.car_type_id)
     if item.car_base_info_id_list:
         filters.append(models.CarBaseInfo.id.in_(item.car_base_info_id_list))
         filters.extend(conditional_query(item))
