@@ -17,3 +17,15 @@ from app.models.platform import *
 from app.models.car_Type import *
 from app.models.working_conditions import *
 from app.models.kc_parameters import *
+from app.models.modules import *
+from app.models.brake_control import *
+from app.models.brake_execution import *
+from app.models.downward_turn import *
+from app.models.elastic_Parts import *
+from app.models.structural_Parts import *
+from app.models.suspension import *
+from app.models.transmission import *
+from app.models.upward_turn import *
+
+
+

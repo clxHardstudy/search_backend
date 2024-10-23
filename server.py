@@ -8,6 +8,8 @@ from app.routers.car_type import router_car_type
 from app.routers.vertical_parallel_arb_connected import router_vertical_parallel_arb_connected
 from app.routers.working_conditions import router_working_conditions
 from app.routers.platform import router_platform
+from app.routers.modules import router_modules
+from app.routers.data_import import router_data_import
 from configs.setting import config
 
 Base.metadata.create_all(bind=engine)
@@ -35,6 +37,8 @@ app.include_router(router_car_type)
 app.include_router(router_platform)
 app.include_router(router_vertical_parallel_arb_connected)
 app.include_router(router_working_conditions)
+app.include_router(router_modules)
+app.include_router(router_data_import)
 
 if __name__ == '__main__':
     uvicorn.run(app, host="127.0.0.1", port=8000)

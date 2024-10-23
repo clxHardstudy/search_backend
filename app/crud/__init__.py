@@ -4,3 +4,5 @@ from app.crud.car_type import *
 from app.crud.platform import *
 from app.crud.vertical_parallel_arb_connected import *
 from app.crud.working_conditions import *
+from app.crud.modules import *
+from app.crud.data_import import *
