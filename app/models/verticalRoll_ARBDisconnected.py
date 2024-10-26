@@ -15,5 +15,5 @@ class VerticalRollARBDisconnected(BaseModel):
     roll_stiffness_distribution = Column(String(255), comment='侧倾刚度分配')
     kinematic_oll_centre_height = Column(String(255), comment='几何侧倾中心 ')
     coordinate_system = Column(Integer, comment='坐标系【0：front、1：rear】')
-    car_type_id = Column(Integer, comment='车型类别id【1：轿车、2：SUV】')
+    # car_type_id = Column(Integer, comment='车型类别id【1：轿车、2：SUV】')
     car_base_info_id = Column(Integer, comment="汽车主键id")

@@ -3,7 +3,6 @@ from sqlalchemy import Column, Integer, String, JSON, Date
 from app.models.database import BaseModel
 
 
-# 悬架结构件
 class Upward_turn(BaseModel):
     __tablename__ = "upward_turn"
     id = Column(Integer, primary_key=True, index=True, comment='id')

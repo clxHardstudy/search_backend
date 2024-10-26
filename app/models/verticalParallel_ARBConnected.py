@@ -20,5 +20,5 @@ class VerticalParallelARBConnected(BaseModel):
     fore_aft_displacement_wc = Column(String(255), comment='轮心纵向位移 ')
     fore_aft_displacement_tcp = Column(String(255), comment='轮胎接地点纵向位移')
     coordinate_system = Column(Integer, comment='坐标系【0：front、1：rear】')
-    car_type_id = Column(Integer, comment='车型类别id【1：轿车、2：SUV】')
+    # car_type_id = Column(Integer, comment='车型类别id【1：轿车、2：SUV】')
     car_base_info_id = Column(Integer, comment="汽车主键id")

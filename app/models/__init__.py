@@ -26,6 +26,16 @@ from app.models.structural_Parts import *
 from app.models.suspension import *
 from app.models.transmission import *
 from app.models.upward_turn import *
+from app.models.other_modules_parameters import *
+from app.models.suspension_system_module import *
+from app.models.suspension_system_module_parameters import *
+from app.models.braking_system_module import *
+from app.models.braking_system_module_parameters import *
+from app.models.steering_system_module import *
+from app.models.steering_system_module_parameters import *
+from app.models.traditional_four_wheel_drive_system_module import *
+from app.models.traditional_four_wheel_drive_system_module_parameters import *
+
 
 
 

@@ -1,0 +1,27 @@
+from fastapi_pagination import paginate, Params
+from sqlalchemy.orm import Session
+from app import schemas, crud
+from fastapi import APIRouter, WebSocket, Depends
+from app.common.validation import TokenSchemas, OAuth2PasswordRequestForm, check_user, check_user_ws, \
+    fromat_token_to_user
+from app import get_db, models
+
+router_suspension_system = APIRouter(
+    prefix="/suspension_system",
+    tags=["suspension_system-悬架系统【前悬架、后悬架】"],
+)
+
+
+@router_suspension_system.get("/", summary="获取悬架系统的所有子表信息")
+def get_suspension_system_module(db: Session = Depends(get_db)):
+    return crud.get_suspension_system_module(db=db)
+
+
+@router_suspension_system.get("/detail_title", summary="获取悬架系统的所有子表的详细字段参数")
+def get_suspension_system_module_parameters(db: Session = Depends(get_db)):
+    return crud.get_suspension_system_module_parameters(db=db)
+
+
+@router_suspension_system.post("/data_all", summary="获取悬架系统的所属表数据【结构件、弹性件】")
+def get_suspension_system_data(item: schemas.SuspensionSystemData, db: Session = Depends(get_db)):
+    return crud.get_suspension_system_data(item=item, db=db)

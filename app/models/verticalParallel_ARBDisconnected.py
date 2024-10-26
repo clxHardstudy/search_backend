@@ -10,5 +10,5 @@ class VerticalParallelARBDisconnected(BaseModel):
     wheel_rate = Column(String(255), comment='悬架刚度')
     vertical_force_hysteresis = Column(String(255), comment='悬架摩擦')
     coordinate_system = Column(Integer, comment='坐标系【0：front、1：rear】')
-    car_type_id = Column(Integer, comment='车型类别id【1：轿车、2：SUV】')
+    # car_type_id = Column(Integer, comment='车型类别id【1：轿车、2：SUV】')
     car_base_info_id = Column(Integer, comment="汽车主键id")

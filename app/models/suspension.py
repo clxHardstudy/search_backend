@@ -3,7 +3,6 @@ from sqlalchemy import Column, Integer, String, JSON, Date
 from app.models.database import BaseModel
 
 
-# 悬架结构件
 class Suspension(BaseModel):
     __tablename__ = "suspension"
     id = Column(Integer, primary_key=True, index=True, comment='id')

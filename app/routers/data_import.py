@@ -1,3 +1,4 @@
+import time
 from io import BytesIO
 
 from fastapi.encoders import jsonable_encoder
@@ -24,5 +25,4 @@ async def data_import(file: UploadFile = File(...), db: Session = Depends(get_db
     contents = await file.read()
     # 将字节流转换为 Pandas DataFrame
     df = pd.read_excel(BytesIO(contents))
-    car_data = df.iloc[0:, 4:]  # 每个表中的数据
-    print(car_data)
+    return crud.data_import(db=db, df=df)

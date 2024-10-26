@@ -6,3 +6,7 @@ from app.crud.vertical_parallel_arb_connected import *
 from app.crud.working_conditions import *
 from app.crud.modules import *
 from app.crud.data_import import *
+from app.crud.suspension_system import *
+from app.crud.braking_system import *
+from app.crud.steering_system import *
+from app.crud.traditional_four_wheel_drive_system import *
