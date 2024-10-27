@@ -22,6 +22,19 @@ def get_traditional_four_wheel_drive_system_module_parameters(db: Session = Depe
     return crud.get_traditional_four_wheel_drive_system_module_parameters(db=db)
 
 
+@router_traditional_four_wheel_drive_system.post("/son_detail_title", summary="获取转向系统的所有子表的详细字段参数")
+def get_traditional_four_wheel_drive_system_module_parameters(item: schemas.TraditionalFourWheelDriveSystemDataId,
+                                                              db: Session = Depends(get_db)):
+    return crud.get_module_parameters_traditional_four_wheel_drive(item=item, db=db)
+
+
 @router_traditional_four_wheel_drive_system.post("/data_all", summary="获取制动系统的所属表数据【制动控制、制动执行】")
-def get_traditional_four_wheel_drive_system_data(item: schemas.TraditionalFourWheelDriveSystemData, db: Session = Depends(get_db)):
+def get_traditional_four_wheel_drive_system_data(item: schemas.TraditionalFourWheelDriveSystemData,
+                                                 db: Session = Depends(get_db)):
     return crud.get_traditional_four_wheel_drive_system_data(item=item, db=db)
+
+
+@router_traditional_four_wheel_drive_system.post("/detail_once", summary="获取某个模版的所有子表参数数值")
+def get_traditional_four_wheel_drive_system_data_once(item: schemas.TraditionalFourWheelDriveSystemDataOnce,
+                                                      db: Session = Depends(get_db)):
+    return crud.get_traditional_four_wheel_drive_system_data_once(item=item, db=db)

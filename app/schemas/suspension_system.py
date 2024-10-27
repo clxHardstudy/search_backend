@@ -27,3 +27,25 @@ class SuspensionSystemSonDetailParameters(BaseModel):
                 "suspension_system_son_list": [1, 2],
             }
         }
+
+
+class SuspensionSystemDataOnce(BaseModel):
+    car_base_info_id: int
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "car_base_info_id": 1,
+            }
+        }
+
+
+class SuspensionSystemDataId(BaseModel):
+    module_data_id_list: Optional[List[int]] = None
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "module_data_id_list": [1],
+            }
+        }
