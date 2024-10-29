@@ -35,3 +35,8 @@ def get_braking_system_data(item: schemas.BrakingSystemData, db: Session = Depen
 @router_braking_system.post("/detail_once", summary="获取某个模版的所有子表参数数值")
 def get_braking_system_data_once(item: schemas.BrakingSystemDataOnce, db: Session = Depends(get_db)):
     return crud.get_braking_system_data_once(item=item, db=db)
+
+
+@router_braking_system.post("/update_detail_once", summary="修改某个汽车的制动系统")
+def update_braking_system_detail_once(item: schemas.BrakingSystemDetailAll, db: Session = Depends(get_db)):
+    return crud.update_braking_system_detail_once(item=item, db=db)

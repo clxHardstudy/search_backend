@@ -61,11 +61,11 @@ def get_working_conditions_detail(item: schemas.WorkingConditions, db: Session):
             for attr, value in vars(res).items():
                 # 仅处理浮点数或字符串的数字
                 if isinstance(value, float):
-                    setattr(res, attr, round(value, 3))
+                    setattr(res, attr, str(round(value, 3)))
                 elif isinstance(value, str) and is_float_or_int(value):
                     decimal_value = format_decimal(value)
                     if float(decimal_value) != float(value):
-                        setattr(res, attr, decimal_value)
+                        setattr(res, attr, str(decimal_value))
             formatted_res_list.append(res)
         table_obj_date_dic.update({table_name: formatted_res_list})
     return table_obj_date_dic
@@ -171,7 +171,6 @@ def update_working_conditions_detail_once(item: schemas.WorkingConditionsDetailA
             new_record = table_model(
                 car_base_info_id=item.car_base_info_id,
                 coordinate_system=item.coordinate_system,
-                car_type_id=car_base_info_res.car_type_id,
                 **table_items
             )
             db.add(new_record)

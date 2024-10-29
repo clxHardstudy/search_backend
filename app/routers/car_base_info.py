@@ -69,3 +69,8 @@ def search_car_by_multiple_condition_query(item: schemas.CarBaseInfoMultipleCond
 def search_car_by_new_multiple_condition_query(item: schemas.CarBaseInfoNewMultipleConditionQuery,
                                                db: Session = Depends(get_db)):
     return crud.search_car_by_new_multiple_condition_query(item=item, db=db)
+
+
+@router_car_base_info.post("/multiple_wheelbase", summary="获取轴距、轮距")
+def get_multiple_wheelbase(item: schemas.MultipleWheelbase, db: Session = Depends(get_db)):
+    return crud.get_multiple_wheelbase(item=item, db=db)

@@ -35,3 +35,8 @@ def get_suspension_system_data(item: schemas.SuspensionSystemData, db: Session =
 @router_suspension_system.post("/detail_once", summary="获取某个模版的所有子表参数数值")
 def get_suspension_system_detail_once(item: schemas.SuspensionSystemDataOnce, db: Session = Depends(get_db)):
     return crud.get_suspension_system_data_once(item=item, db=db)
+
+
+@router_suspension_system.post("/update_detail_once", summary="修改某个汽车的悬架系统")
+def update_suspension_system_detail_once(item: schemas.SuspensionSystemDetailAll, db: Session = Depends(get_db)):
+    return crud.update_suspension_system_detail_once(item=item, db=db)

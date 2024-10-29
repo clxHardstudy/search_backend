@@ -49,3 +49,29 @@ class SteeringSystemDataId(BaseModel):
                 "module_data_id_list": [1],
             }
         }
+
+
+class SteeringSystemDetailAll(BaseModel):
+    car_base_info_id: int
+    coordinate_system: int
+    data: dict
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "car_base_info_id": 72,
+                "coordinate_system": 0,
+                "data": {
+                    "upward_turn": {'steering_column': '转向管柱',
+                                    'electric_power_steering_column': '电动助力转向管柱',
+                                    'electric_adjustable_steering_column': '电动可调转向管柱',
+                                    'electric_adjustable_power_steering_column': '电动可调助力转向管柱',
+                                    'intermediate_shaft_assembly': '中间轴总成'
+                                    },
+                    "downward_turn": {'mechanical_steering_gear': '机械转向器',
+                                      'dp_eps': 'DP-EPS',
+                                      'r_eps': "R-EPS",
+                                      },
+                }
+            }
+        }

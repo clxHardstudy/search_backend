@@ -105,3 +105,53 @@ def get_suspension_system_data_once(item: schemas.SuspensionSystemDataOnce, db: 
                 table_obj.coordinate_system == coordinate_system_value).all()
             table_obj_date_dic[coordinate_system_key].update({table_name: res})
     return table_obj_date_dic
+
+
+def update_suspension_system_detail_once(item: schemas.SuspensionSystemDetailAll, db: Session):
+    table_obj = models.SuspensionSystemModule
+    car_base_info_res = db.query(models.CarBaseInfo).filter(models.CarBaseInfo.id == item.car_base_info_id).first()
+    module_son_table_list = [1, 2]
+    module_system_table_obj_dic = {
+        "1": models.Structural_Parts,
+        "2": models.Elastic_Parts,
+    }
+    # 批量查询条件工况对象
+    module_system = db.query(table_obj).filter(
+        table_obj.id.in_(module_son_table_list)
+    ).all()
+    # 准备表对象字典
+    table_obj_dic = {
+        res.name_en: module_system_table_obj_dic[str(res.id)]
+        for res in module_system
+    }
+    # 遍历传入的 data 字典
+    for table_name, table_items in item.data.items():
+        # 根据 table_name 在表对象字典中找到对应的表模型
+        table_model = table_obj_dic.get(table_name)
+        if not table_model:
+            # 如果没找到对应的表，继续下一个
+            continue
+        # 查询对应的记录（根据 car_base_info_id 和 coordinate_system）
+        record = db.query(table_model).filter(
+            table_model.car_base_info_id == item.car_base_info_id,
+            table_model.coordinate_system == item.coordinate_system
+        ).first()
+        if record:
+            # 找到记录，更新每个字段
+            for field, value in table_items.items():
+                if hasattr(record, field):
+                    setattr(record, field, value)  # 动态更新字段
+            print("找到目标，更新！")
+        else:
+            print("未找到目标：跳过！")
+            # 如果没有找到记录，可以选择创建新的记录（如果这是你想要的行为）
+            # new_record = table_model(
+            #     car_base_info_id=item.car_base_info_id,
+            #     coordinate_system=item.coordinate_system,
+            #     car_type_id=car_base_info_res.car_type_id,
+            #     **table_items
+            # )
+            # db.add(new_record)
+    # 提交所有修改
+    db.commit()
+    db.flush()

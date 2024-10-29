@@ -38,3 +38,9 @@ def get_traditional_four_wheel_drive_system_data(item: schemas.TraditionalFourWh
 def get_traditional_four_wheel_drive_system_data_once(item: schemas.TraditionalFourWheelDriveSystemDataOnce,
                                                       db: Session = Depends(get_db)):
     return crud.get_traditional_four_wheel_drive_system_data_once(item=item, db=db)
+
+
+@router_traditional_four_wheel_drive_system.post("/update_detail_once", summary="修改某个汽车的传动四驱系统")
+def update_traditional_four_wheel_drive_system_detail_once(item: schemas.TraditionalFourWheelDriveSystemDetailAll,
+                                                           db: Session = Depends(get_db)):
+    return crud.update_traditional_four_wheel_drive_system_detail_once(item=item, db=db)

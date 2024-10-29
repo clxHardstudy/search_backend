@@ -49,3 +49,27 @@ class TraditionalFourWheelDriveSystemDataId(BaseModel):
                 "module_data_id_list": [1],
             }
         }
+
+
+class TraditionalFourWheelDriveSystemDetailAll(BaseModel):
+    car_base_info_id: int
+    coordinate_system: int
+    data: dict
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "car_base_info_id": 72,
+                "coordinate_system": 0,
+                "data": {
+                    "transmission": {'transmission_shaft': '传动轴',
+                                     'drive_shaft': '驱动轴',
+                                     },
+                    "suspension": {'front_suspension': '前悬置',
+                                   'rear_suspension': '后悬置',
+                                   'left_suspension': "左悬置",
+                                   'right_suspension': "右悬置",
+                                   },
+                }
+            }
+        }

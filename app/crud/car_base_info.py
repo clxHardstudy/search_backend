@@ -215,7 +215,6 @@ def search_car_by_multiple_condition_query(item: schemas.CarBaseInfoMultipleCond
 
 def search_car_by_new_multiple_condition_query(item: schemas.CarBaseInfoNewMultipleConditionQuery, db: Session):
     filters = []
-    # print("item.car_type_id: ", item.car_type_id)
     if item.car_base_info_id_list:
         filters.append(models.CarBaseInfo.id.in_(item.car_base_info_id_list))
         filters.extend(conditional_query(item))
@@ -266,3 +265,22 @@ def conditional_query(item):
     elif rear_track_right:
         filters.append(models.CarBaseInfo.rear_track == rear_track_right)
     return filters
+
+
+def get_multiple_wheelbase(item: schemas.MultipleWheelbase, db: Session):
+    table_obj = models.CarBaseInfo
+    res = []
+    # 批量查询，减少数据库查询次数
+    target_query = db.query(table_obj).filter(table_obj.id.in_(item.car_base_info_id_list)).all()
+    # 遍历查询结果
+    for target_query_once in target_query:
+        # 统一构造数据字典
+        target_info = {
+            "car_base_info_id": target_query_once.id,
+            "name": target_query_once.name,
+            "wheelbase": target_query_once.wheelbase,
+            "front_track": target_query_once.front_track,
+            "rear_track": target_query_once.rear_track  # 确保这里是 rear_track，而不是 front_track
+        }
+        res.append(target_info)
+    return res

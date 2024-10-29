@@ -35,3 +35,8 @@ def get_steering_system_data(item: schemas.SteeringSystemData, db: Session = Dep
 @router_steering_system.post("/detail_once", summary="获取某个模版的所有子表参数数值")
 def get_steering_system_detail_once(item: schemas.SteeringSystemDataOnce, db: Session = Depends(get_db)):
     return crud.get_steering_system_data_once(item=item, db=db)
+
+
+@router_steering_system.post("/update_detail_once", summary="修改某个汽车的转向系统")
+def update_steering_system_detail_once(item: schemas.SteeringSystemDetailAll, db: Session = Depends(get_db)):
+    return crud.update_steering_system_detail_once(item=item, db=db)
