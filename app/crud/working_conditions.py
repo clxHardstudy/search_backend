@@ -4,6 +4,8 @@ from app import models, schemas
 from sqlalchemy.orm import Session
 from decimal import Decimal, ROUND_DOWN
 
+from app.common.validation import check_access_token
+
 
 def get_working_conditions(db: Session):
     """
@@ -124,6 +126,20 @@ def update_working_conditions_detail_once(item: schemas.WorkingConditionsDetailA
     :param db: 数据库会话
     :return: None
     """
+    token = item.token
+    if not token:
+        return {
+            "state_code": 401,
+            "reason": "没有权限"
+        }
+    user_id, exp = check_access_token(token, "user")
+    user_obj = db.query(models.User).filter(models.User.id == user_id).first()
+    if user_obj:
+        if user_obj.admin_id != 1:
+            return {
+                "state_code": 401,
+                "reason": "没有权限"
+            }
     car_base_info_res = db.query(models.CarBaseInfo).filter(models.CarBaseInfo.id == item.car_base_info_id).first()
     working_conditions_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     working_conditions_table_obj_dic = {

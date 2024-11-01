@@ -34,6 +34,11 @@ def login_user(item: schemas.UserLogin, db: Session = Depends(get_db)):
     return crud.login_user(db=db, item=item)
 
 
+@router_user.post("/one", summary="获取某个用户")
+def get_user_one(item: schemas.UserToken, db: Session = Depends(get_db)):
+    return crud.get_user_one(item=item, db=db)
+
+
 @router_user.put("", summary="管理员更新")
 def update_user(update_item: schemas.UserUpdate, db: Session = Depends(get_db),
                 user: models.User = Depends(check_user)):
@@ -53,6 +58,7 @@ def get_user_once(item_id: int, db: Session = Depends(get_db)):
 @router_user.delete("/{item_id}", summary="删除管理员")
 def get_user_once(item_id: int, db: Session = Depends(get_db)):
     return crud.delete_user(db, item_id)
+
 
 @router_user.websocket("/ws")
 async def check_alive(

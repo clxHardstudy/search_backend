@@ -66,6 +66,7 @@ class BrakingSystemDetailAll(BaseModel):
     car_base_info_id: int
     coordinate_system: int
     data: dict
+    token: str
 
     class Config:
         schema_extra = {

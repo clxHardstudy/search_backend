@@ -1,10 +1,9 @@
-from typing import Union,Optional
+from typing import Union, Optional
 
 from pydantic import BaseModel
 from faker import Faker
 
 faker = Faker(locale='zh_CN')
-
 
 
 class UserCreate(BaseModel):
@@ -14,8 +13,8 @@ class UserCreate(BaseModel):
     class Config:
         schema_extra = {
             "example": {
-                "username": "clx",
-                "password": "020905"}}
+                "username": "user",
+                "password": "user"}}
 
 
 class UserUpdate(BaseModel):
@@ -38,6 +37,7 @@ class UserSwaggerLogin(BaseModel):
                 "password": "020905",
             }}
 
+
 class UserLogin(BaseModel):
     username: str
     password: str
@@ -47,6 +47,16 @@ class UserLogin(BaseModel):
             "example": {
                 "username": "clx",
                 "password": "020905",
+            }}
+
+
+class UserToken(BaseModel):
+    token: str
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJOb25lIiwiZXhwIjoxNzMwNTM2MzI4fQ.MRp9i775T6SGXCQMSHDVRdo9zMZzZUuYuIiqa8JUmTs",
             }}
 
 

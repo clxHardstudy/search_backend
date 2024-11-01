@@ -32,7 +32,7 @@ def create_user(db: Session, item: schemas.UserCreate):
         "update_time": int(time.time()),
         "last_login": int(time.time()),
     })
-    db_item.auth_token = create_access_token(db_item.id, 'user')
+    # db_item.auth_token = create_access_token(db_item.id, 'user')
     db.add(db_item)
     db.commit()
     db.flush()
@@ -69,11 +69,28 @@ def login_user(db: Session, item: schemas.UserLogin):
     if not verify_password(item.password, user.password_hash):
         return {"status_code": 401}
     user.last_login = int(time.time())
+    # 登陆更新token
+    user.auth_token = create_access_token(subject=user.id, user_type="user")
     db.commit()
     db.flush()
     res = user.to_dict()
     res.update({"status_code": 200})
     print(res)
+    return res
+
+
+def get_user_one(item: schemas.UserToken, db: Session):
+    token = item.token
+    sub, exp = check_access_token(token, "user")
+    print(sub,exp)
+    user_obj = db.query(models.User).filter(models.User.id == sub).first()
+
+    if user_obj:
+        admin_id = user_obj.admin_id
+        print(admin_id)
+        res = db.query(models.Admin).filter(models.Admin.id == admin_id).first()
+    else:
+        res = {"state_code": 404}
     return res
 
 

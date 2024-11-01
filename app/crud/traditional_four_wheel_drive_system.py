@@ -113,6 +113,20 @@ def get_traditional_four_wheel_drive_system_data_once(item: schemas.TraditionalF
 
 def update_traditional_four_wheel_drive_system_detail_once(item: schemas.TraditionalFourWheelDriveSystemDetailAll,
                                                            db: Session):
+    token = item.token
+    if not token:
+        return {
+            "state_code": 401,
+            "reason": "没有权限"
+        }
+    user_id, exp = check_access_token(token, "user")
+    user_obj = db.query(models.User).filter(models.User.id == user_id).first()
+    if user_obj:
+        if user_obj.admin_id != 1:
+            return {
+                "state_code": 401,
+                "reason": "没有权限"
+            }
     table_obj = models.TraditionalFourWheelDriveSystemModule
     car_base_info_res = db.query(models.CarBaseInfo).filter(models.CarBaseInfo.id == item.car_base_info_id).first()
     module_son_table_list = [1, 2]
